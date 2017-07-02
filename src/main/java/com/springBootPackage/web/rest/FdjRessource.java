@@ -29,20 +29,20 @@ public class FdjRessource {
 	@Inject
 	FdjService fdjService;
 
-	@PostMapping("/jouer")
+	@PostMapping("/public/jouer")
 	public Tirage jouer(@RequestBody ObjetDateRecu objetDateRecu) {
-		Tirage listTirage = new Tirage();
+		Tirage tirage = new Tirage();
 		LOG.info("Demande Récuperation du tirage");
 		if (objetDateRecu.getCalDate() == null) {
 			LOG.info("L'archivage à échoué : date est null");
 		} else {
-			listTirage = fdjService.getTirage(objetDateRecu);
+			tirage = fdjService.getTirage(objetDateRecu);
 			LOG.info("Récuperation faite");
 		}
-		return listTirage;
+		return tirage;
 	}
 
-	@PostMapping("/archiver")
+	@PostMapping("/private/archiver")
 	public MessageRetour archiver(@RequestBody ObjetArchiver objetArchiver) {
 		MessageRetour message = new MessageRetour();
 		LOG.info("Demande d'archivage du tirage");
@@ -55,7 +55,7 @@ public class FdjRessource {
 		}
 		return message;
 	}
-	@GetMapping("/implementermongo")
+	@GetMapping("/private/implementermongo")
 	public MessageRetour implementerMongo() {
 		MessageRetour messageRetour = new MessageRetour();
 		LOG.info("Demande persistence historique");
@@ -64,5 +64,17 @@ public class FdjRessource {
 			
 		LOG.info("Historique Tirage persité");
 		return messageRetour;
+	}
+	
+	
+	@GetMapping("/private/lecturemongo")
+	public List<ObjetArchiver> lectureMongo() {
+		List<ObjetArchiver> listObjetTirage = new ArrayList<>();
+		LOG.info("Demande récupération historique");
+		
+		listObjetTirage = fdjService.recupererHistorique();
+			
+		LOG.info("Liste envoyé");
+		return listObjetTirage;
 	}
 }

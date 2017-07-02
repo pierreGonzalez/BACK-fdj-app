@@ -190,4 +190,13 @@ public class FdjServiceImpl implements FdjService {
 		return messageRetour;
 	}
 
+	@Override
+	public List<ObjetArchiver> recupererHistorique() {
+		
+		List<ObjetArchiver> listeObjetTiragePersistee = new ArrayList<>();
+		// Récuperer la liste des tirage en base
+		listeObjetTiragePersistee = fdjRepository.findAll();
+		return listeObjetTiragePersistee;
+	}
+
 }

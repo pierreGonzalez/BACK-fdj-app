@@ -1,5 +1,7 @@
 package com.springBootPackage.domain.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.springBootPackage.domain.MessageRetour;
@@ -12,4 +14,5 @@ public interface FdjService {
 	public Tirage getTirage(ObjetDateRecu objetDateRecu );
 	public MessageRetour archiverTirage(ObjetArchiver objetArchiver);
 	public MessageRetour persisteHistorique();
+	public List<ObjetArchiver> recupererHistorique();
 }
