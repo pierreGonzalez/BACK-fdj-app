@@ -9,10 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springBootPackage.domain.MessageRetour;
@@ -76,5 +78,11 @@ public class FdjRessource {
 			
 		LOG.info("Liste envoyé");
 		return listObjetTirage;
+	}
+	@DeleteMapping("/private/archiver")
+	public void testLogin(@RequestParam("id") String id) {
+		LOG.info("Demande de suppression d'une archive"+id);
+		fdjService.deleteArchive(id);
+		LOG.info("Suppression faite");
 	}
 }

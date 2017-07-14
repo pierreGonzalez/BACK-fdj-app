@@ -14,5 +14,6 @@ public interface FdjService {
 	public Tirage getTirage(ObjetDateRecu objetDateRecu );
 	public MessageRetour archiverTirage(ObjetArchiver objetArchiver);
 	public MessageRetour persisteHistorique();
+	public void deleteArchive(String id);
 	public List<ObjetArchiver> recupererHistorique();
 }

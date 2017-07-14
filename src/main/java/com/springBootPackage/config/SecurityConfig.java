@@ -20,16 +20,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
 		auth.inMemoryAuthentication()
-			.withUser("pierre").password("youRawesome").roles(USER); 
+			.withUser("pierre").password("youRawesome").roles(USER);
 	}
 	// Authorization : Role -> Access
 	@Override
 	protected void configure (HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-				.antMatchers("fdj/public/*").permitAll()
-				.anyRequest().authenticated()
-				.antMatchers("fdj/private/*").hasRole(USER)
+				.antMatchers("fdj/public/**").permitAll()
+				.antMatchers("fdj/private/**").hasRole(USER)
+				//.antMatchers("fdj/private/**").permitAll()
 			.and().httpBasic();
+		http.csrf().disable();
 	}
 	
 }

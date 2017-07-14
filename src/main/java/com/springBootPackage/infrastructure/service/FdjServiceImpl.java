@@ -177,6 +177,9 @@ public class FdjServiceImpl implements FdjService {
 		// On recupère la distance correspondant à la date de objetArchiver
 		// recus
 		objetArchiver.setDistance(getDistance(objetArchiver.getDate()));
+		// On set l'heure à 21h00
+		objetArchiver.getDate().set(Calendar.HOUR_OF_DAY, 21);
+		objetArchiver.getDate().set(Calendar.MINUTE, 0);
 		// Implémenter la base mongo le tirage
 		fdjRepository.save(objetArchiver);
 
@@ -197,6 +200,11 @@ public class FdjServiceImpl implements FdjService {
 		// Récuperer la liste des tirage en base
 		listeObjetTiragePersistee = fdjRepository.findAll();
 		return listeObjetTiragePersistee;
+	}
+
+	@Override
+	public void deleteArchive(String id) {
+		fdjRepository.delete(id);
 	}
 
 }
