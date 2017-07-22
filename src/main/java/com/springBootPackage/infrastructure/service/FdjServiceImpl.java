@@ -35,8 +35,10 @@ public class FdjServiceImpl implements FdjService {
 
 	// Récupère l'historique des tirages dans la base mongo
 	List<ObjetArchiver> listeTirages = fdjRepository.findAll();
-	// Appel tirage manager V2 on en récupère un objet avec une liste de 15 numero
-	// et 4 etoiles
+	/*
+	 * Appel de tirageManager pour récupèrer un objet avec une liste de 15 numeros
+	 * et 4 etoiles
+	 */
 	tirageCorrespondant = tirageManager.getTirage(listeTirages);
 
 	List<Numero> combinaisonNumeros5 = new ArrayList<>();
@@ -44,18 +46,20 @@ public class FdjServiceImpl implements FdjService {
 	List<Numero> combinaisonNumeros15 = tirageCorrespondant.getNumeros();
 	List<Etoile> combinaisonEtoiles4 = tirageCorrespondant.getEtoiles();
 	Boolean doublonNumeros = false;
-	// tant qu'une nouvelle combinaison n'est pas trouvée et validée on en cherche
+	/*
+	 * Tant qu'une nouvelle combinaison n'est pas trouvée et validée on en en génère
+	 * une nouvelle
+	 */
 	do {
-	    // on recupere les numeros
+	    // On recupère les numeros
 	    combinaisonNumeros5 = getTirageNumeros(combinaisonNumeros15);
-	    // on implément tirageCorrespondant pour tester les numeros via une méthode
-	    // commune aux étoiles
+	    // On implément tirageCorrespondant pour tester les numeros
 	    tirageCorrespondant.setNumeros(combinaisonNumeros5);
-	    // on verifie les numeros
+	    // On verifie les numeros avec verificationDoublon()
 	    doublonNumeros = verificationDoublon(listeTirages, tirageCorrespondant);
 	} while (doublonNumeros);
 
-	// on recupere les etoiles
+	// On récupere les etoiles
 	combinaisonEtoiles2 = getTirageEtoiles(combinaisonEtoiles4);
 	tirageCorrespondant.setEtoiles(combinaisonEtoiles2);
 
@@ -63,7 +67,7 @@ public class FdjServiceImpl implements FdjService {
     }
 
     /**
-     * On shuffle et on prend les 5 derniers numero de la liste de 15 numero
+     * On shuffle et on prend les 5 derniers numéros de la liste de 15 numeros de
      * combinaison15Numeros
      */
     private List<Numero> getTirageNumeros(List<Numero> combinaison15Numeros) {
@@ -78,7 +82,7 @@ public class FdjServiceImpl implements FdjService {
     }
 
     /**
-     * On shuffle et on prend les 2 dernieres etoiles de la liste de 4 étoiles
+     * On shuffle et on prend les 2 dernières étoiles de la liste de 4 étoiles
      * combinaison4Etoiles
      */
     private List<Etoile> getTirageEtoiles(List<Etoile> combinaison4Etoiles) {
@@ -93,7 +97,7 @@ public class FdjServiceImpl implements FdjService {
     }
 
     /**
-     * On verifie qu'un tirage similaire à 4 numero près n'est pas déjà sortie
+     * On vérifie qu'un tirage similaire à 4 numero près n'est pas déjà sorti
      * (existant en base)
      */
     private Boolean verificationDoublon(List<ObjetArchiver> listeTirages, Tirage tirageCorrespondant) {
@@ -120,8 +124,8 @@ public class FdjServiceImpl implements FdjService {
 	}
 
 	/*
-	 * On implémente une liste des numeros du tirage passé en paramètre (celui à
-	 * comparer demandé par le Front)
+	 * On implémente une liste des numeros du tirage passée en paramètre (correspond
+	 * à celui demandé par le Front)
 	 */
 	List<Integer> listeNumerosTcInteger = new ArrayList<>();
 	for (Numero numeroTc : tirageCorrespondant.getNumeros()) {
@@ -131,8 +135,8 @@ public class FdjServiceImpl implements FdjService {
 	Collections.sort(listeNumerosTcInteger);
 
 	/*
-	 * Pour chaque numero de chaque liste en base, on compare chaque numero aux
-	 * numeros du tirage demandé
+	 * On compare la liste demandée à chaque liste en base
+	 * Une comparaison numéro par numéro est exécutée
 	 */
 	Integer cptDoublons = 0;
 	Integer cptTemporaire = 0;
@@ -161,8 +165,8 @@ public class FdjServiceImpl implements FdjService {
     public MessageRetour archiverTirage(ObjetArchiver objetArchiver) {
 	MessageRetour messageRetour = new MessageRetour();
 
-	// On set l'heure à 21h00
-	objetArchiver.getDate().set(Calendar.HOUR_OF_DAY, 21);
+	// On set l'heure à 21h00 (heure local)
+	objetArchiver.getDate().set(Calendar.HOUR_OF_DAY, 19);
 	objetArchiver.getDate().set(Calendar.MINUTE, 0);
 	// Implémentation de la base mongo le tirage
 	fdjRepository.save(objetArchiver);
