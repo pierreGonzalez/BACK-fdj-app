@@ -15,18 +15,22 @@ import com.springBootPackage.domain.data.OccuranceData;
 
 @Service
 public class TirageManager {
+    /**
+     * Retourne un objet avec une liste de 15 numeros et 4 etoiles
+     * @param listeTirages
+     * @return Tirage
+     */
     public Tirage getTirage(List<ObjetArchiver> listeTirages) {
 	Tirage tirageCorrespondant = new Tirage();
-	// On fait les stats de sorti de chaque numero des tirages
-	// / On créer une liste d'occurance
-
+	/*
+	 * On calcule l'occurence de chaque numéro et chaque étoile depuis listeTirage
+	 */
+	// On créer une liste d'occurance pour les étoiles et numéros
 	List<StatNombre> listeOcNumeros = OccuranceData.getListeStatNumerosEnum();
 	List<StatNombre> listeOcEtoiles = OccuranceData.getListeStatEtoilesEnum();
 
 	// On met à jour les occurances de la liste de tirages
 	for (ObjetArchiver objetArchiver : listeTirages) {
-	    // Pour chaque objetArchiver maj l'occurences de ses numeros et
-	    // etoiles
 	    for (Numero numero : objetArchiver.getNumeros()) {
 		for (StatNombre statNumero : listeOcNumeros) {
 		    if (numero.getNumero() == statNumero.getNombre()) {
@@ -58,25 +62,25 @@ public class TirageManager {
 	for (int i = 1; i <= 15; i++) {
 	    Numero numero = new Numero((listeOcNumeros.get(listeOcNumeros.size() - i)).getNombre());
 	    combinaisonNumeros.add(numero);
-	    // On recupere l'occurence de i
+	    // On recupère l'occurence de i
 	    Integer ocCourante = listeOcNumeros.get(listeOcNumeros.size() - i).getOccurence();
 	    /*
-	     * On ajoute l'(occurence courante/au nombre de tirage) à la précision
+	     * On ajoute le rapport (occurence courante/au nombre de tirage) à la précision
 	     * précédente ce qui revient à faire la moyenne des ratios d'occurence
 	     * (occurence/nb de tirage)
 	     */
 	    precisionNumeros += Float.valueOf((float) ocCourante / (float) listeTiragesSize);
 	    precisionNumeros = precisionNumeros / 2;
 	}
-	// On prend les 4 deniers occurences de listeOcEtoiles
+	// On prend les 4 denières occurences de listeOcEtoiles
 	for (int i = 1; i <= 4; i++) {
 	    Etoile etoile = new Etoile((listeOcEtoiles.get(listeOcEtoiles.size() - i)).getNombre());
 	    combinaisonEtoiles.add(etoile);
-	    // On recupere l'occurence de i
+	    // On recupère l'occurence de i
 	    Integer ocCourante = listeOcEtoiles.get(listeOcEtoiles.size() - i).getOccurence();
 	    /*
-	     * On ajoute l'(occurence courante/au nombre de tirage) à la précision
-	     * précédente ce qui revient à faire la moyenne des ratio d'occurence
+	     * On ajoute le rapport (occurence courante/au nombre de tirage) à la précision
+	     * précédente ce qui revient à faire la moyenne des ratios d'occurence
 	     * (occurence/nb de tirage)
 	     */
 	    precisionEtoiles += Float.valueOf((float) ocCourante / (float) listeTiragesSize);

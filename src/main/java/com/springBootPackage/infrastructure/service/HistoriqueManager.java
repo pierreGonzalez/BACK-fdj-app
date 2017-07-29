@@ -25,9 +25,9 @@ public class HistoriqueManager {
     public MessageRetour initialisation() {
 	// Drop de la mongo
 	fdjRepository.deleteAll();
-	// montage de l'hystorique
-	List<ObjetArchiver> listeHistoriqueArchivee = new ArrayList<>();
 	MessageRetour messageRetour = new MessageRetour();
+	List<ObjetArchiver> listeHistoriqueArchivee = new ArrayList<>();
+	// implémentation des différent ObjetArchiver
 	List<Numero> numeros1 = new ArrayList<>();
 	numeros1.add(new Numero(34));
 	numeros1.add(new Numero(27));

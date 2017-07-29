@@ -28,7 +28,7 @@ public interface FdjService {
     public Tirage getTirage(ObjetDateRecu objetDateRecu);
 
     /**
-     * Methode qui permet d'archiver le tirage passé en paramètre en base Mongo
+     * Methode qui permet d'archiver le tirage passé en paramètre dans la base Mongo
      * 
      * @param objetArchiver
      * @return message de confirmation
